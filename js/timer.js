@@ -6,18 +6,7 @@ export class Timer extends EventTarget {
 		this.setOffset(Number(localStorage.getItem('timer.offset'))) || 0;
 		this.timer = setInterval(this.doTick.bind(this), 500);
 		
-		// get new time offset
-		fetch('/api/time')
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				this.setTime(new Date(json.time));
-			})
-			.catch(error => {
-				console.error("Failed to fetch time from server:", error);
-			});
-
+		this.fetchTime();
 	}
 
 	setTime(time) {
@@ -39,5 +28,18 @@ export class Timer extends EventTarget {
         const event = new Event('tick');
         event.time = this.getTime();
         return this.dispatchEvent(event);
+	}
+
+	fetchTime() {
+		fetch('/api/time')
+			.then(response => {
+				return response.json();
+			})
+			.then(json => {
+				this.setTime(new Date(json.time));
+			})
+			.catch(error => {
+				console.error("Failed to fetch time from server:", error);
+			});
 	}
 }
