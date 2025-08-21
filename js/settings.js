@@ -1,3 +1,5 @@
+import './common.js';
+
 export class Settings {
 	constructor(id = "settings") {
 		this.elements = new Map();
@@ -7,6 +9,7 @@ export class Settings {
 		this.addall(this.panel);
 
 		document.body.on("keypress", this.hotKey.bind(this));
+		this.getElement("close").on("click", this.toggle.bind(this));
 	}
 
 	addall(element) {
@@ -30,6 +33,10 @@ export class Settings {
 
 	get(element) {
 		return this.elements.get(element).value;
+	}
+
+	getElement(element) {
+		return this.elements.get(element);
 	}
 
 	set(element, value) {
