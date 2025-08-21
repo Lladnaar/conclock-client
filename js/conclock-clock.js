@@ -25,9 +25,9 @@ class Clock {
 	
 	draw() {
 		const options = {
-			timeStyle: this.settings.get("style") || "short",
-			hour12: this.settings.get('hour12') ? this.settings.get('hour12') === 'true' : undefined,
-			timeZone: this.settings.get('timezone') || undefined
+			timeStyle: this.settings.getValue("style") || "short",
+			hour12: this.settings.getValue('hour12') ? this.settings.getValue('hour12') === 'true' : undefined,
+			timeZone: this.settings.getValue('timezone') || undefined
 		}
 
 		this.clock.textContent = Intl.DateTimeFormat(undefined, options).format(new Date());
