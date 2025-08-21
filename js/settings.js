@@ -17,6 +17,10 @@ export class Settings {
 			this.add(child);
 			if (child.id.substring(0, 8) == "setting.") {
 				this.elements.set(child.id.substring(8), child);
+				child.value = localStorage.getItem(child.id) || '';
+				child.on("change", () => {
+					localStorage.setItem(child.id, child.value);
+				});
 			}
 		}
 		return this;
