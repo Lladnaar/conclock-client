@@ -1,28 +1,30 @@
 export class Settings {
-	constructor(id) {
+	constructor(id = "settings") {
 		this.elements = new Map();
 
 		this.panel = document.getElementById(id);
-		this.add(this.panel);
-
-		// state
 		this.panel.hidden = true;
+		this.addall(this.panel);
 
-		// events
 		document.body.on("keypress", this.hotKey.bind(this));
 	}
 
-	add(element) {
+	addall(element) {
 		for (const child of element.children) {
-			this.add(child);
+			this.addall(child);
 			if (child.id.substring(0, 8) == "setting.") {
-				this.elements.set(child.id.substring(8), child);
-				child.value = localStorage.getItem(child.id) || '';
-				child.on("change", () => {
-					localStorage.setItem(child.id, child.value);
-				});
+				this.add(child, child.id.substring(8));
 			}
 		}
+		return this;
+	}
+
+	add(element, id = element.id) {
+		this.elements.set(id, element);
+		element.value = localStorage.getItem(element.id) || element.value;
+		element.on("change", () => {
+			localStorage.setItem(element.id, element.value);
+		});
 		return this;
 	}
 
