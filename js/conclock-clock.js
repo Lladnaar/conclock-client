@@ -1,4 +1,4 @@
-import { SmartTimer as Timer }  from './timer.js';
+import { Timer }  from './timer.js';
 import { Settings } from './settings.js';
 
 window.addEventListener("load", initialisePage);
@@ -13,7 +13,7 @@ class Clock {
 		this.settings = new Settings("settings");
 
 		this.clock = document.getElementById("clock");
-		this.timer.on("tick", this.update.bind(this));
+		this.timer.addEventListener("tick", this.update.bind(this));
 
 		// add time zones
 		const timezoneSelect = this.settings.getElement("timezone");

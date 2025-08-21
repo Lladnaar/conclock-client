@@ -1,5 +1,3 @@
-import './common.js';
-
 export class Settings {
 	constructor(id = "settings") {
 		this.elements = new Map();
@@ -8,8 +6,8 @@ export class Settings {
 		this.panel.hidden = true;
 		this.addall(this.panel);
 
-		document.body.on("keypress", this.hotKey.bind(this));
-		this.getElement("close").on("click", this.toggle.bind(this));
+		document.body.addEventListener("keypress", this.hotKey.bind(this));
+		this.getElement("close").addEventListener("click", this.toggle.bind(this));
 	}
 
 	addall(element) {
@@ -25,7 +23,7 @@ export class Settings {
 	add(element, id = element.id) {
 		this.elements.set(id, element);
 		element.value = localStorage.getItem(element.id) || element.value;
-		element.on("change", () => {
+		element.addEventListener("change", () => {
 			localStorage.setItem(element.id, element.value);
 		});
 		return this;
@@ -50,7 +48,7 @@ export class Settings {
 	on(element, callback) {
 		const el = this.elements.get(element);
 		if (el) {
-			el.addEventListener("change", callback);
+			el.on("change", callback);
 		}
 		return this;
 	}
